@@ -1,4 +1,5 @@
 <%- include('../partials/header')  %>
+<h2>Question</h2>
 <p><%= question.title %></p>
 <p><%= question.description %></p>
 <p><strong>Created at:</strong><%= question.createdAt %></p>
@@ -11,5 +12,13 @@
   <input type="submit" name="submit" value="Submit">
 </form>
 
+<ul>
+  <% for (let answer of answers) {%>
+    <li>
+      <p><%= answer.content %></p>
+      <p>Created At: <%= answer.createdAt %></p>
 
+    </li>
+  <% } %>
+</ul>
 <%- include('../partials/footer')  %>

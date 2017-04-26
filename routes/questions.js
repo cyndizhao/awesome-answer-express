@@ -44,9 +44,16 @@ router.post('/', function(req, res){
 router.get('/:id', function(req, res){
   const id = req.params.id;
   Question.findById(id).then(function(question){
-    res.render('questions/show', {question: question})
-  });
+    return Promise.all([question, question.getAnswers({order: [['createdAt', 'DESC']]})]);
+  }).then(function([question, answers]){
+    //New! Array Destructuring
+    //const [first, second, ...rest] = [1, 2, 3, 4]
+    // first === 1, second === 2 rest === [3, 4]
+    //can also be done with function argument above
+    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment
+    res.render('questions/show', {question: question, answers: answers})
 
+  })
 })
 
 // URL: /questions/:questionId/answers VERB: All of them!
