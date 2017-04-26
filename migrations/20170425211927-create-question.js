@@ -9,6 +9,8 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       title: {
+        unique: true, // enforce uniquess on title column via postgres
+        allowNull: false, // enforce presence of title value via postgres
         type: Sequelize.STRING
       },
       description: {

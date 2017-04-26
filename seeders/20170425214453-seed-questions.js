@@ -13,6 +13,9 @@ const questions = Array
   .from({length: 100})
   .map(function(){
     return Question.create({title:`${faker.hacker.adjective()} ${faker.hacker.noun()}`, description:faker.hacker.phrase()})
+    .catch(function (error) {console.log(error)})
+    // we're using .catch to prevent our query from crashing
+    // our program when the title is not unique
   })
 
 module.exports = {
@@ -25,12 +28,6 @@ module.exports = {
   },
 
   down: function (queryInterface, Sequelize) {
-    /*
-      Add reverting commands here.
-      Return a promise to correctly handle asynchronicity.
-
-      Example:
-      return queryInterface.bulkDelete('Person', null, {});
-    */
+    return queryInterface.bulkDelete('Questions', null, {});
   }
 };

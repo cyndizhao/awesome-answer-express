@@ -3,7 +3,9 @@
 <p>Welcome!</p>
 <ul>
   <% for (let question of questions) { %>
-    <li><%= question.title %></li>
+    <li>
+    <a href="/questions/<%= question.id %>"><%= question.title %></a>
+    </li>
   <% } %>
 </ul>
 <%- include('../partials/footer')  %>
