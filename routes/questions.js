@@ -3,6 +3,8 @@ const router = express.Router();
 
 const Question = require('../models/index').Question;
 
+//require answers router
+const answers = require('./answers');
 // const {Question} = require('../model/index');
 
 // Questions#index URL: /questions VERB: GET
@@ -47,7 +49,8 @@ router.get('/:id', function(req, res){
 
 })
 
-
+// URL: /questions/:questionId/answers VERB: All of them!
+router.use('/:questionId/answers', answers)
 
 
 module.exports = router;
