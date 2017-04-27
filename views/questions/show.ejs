@@ -4,10 +4,14 @@
 <p><%= question.description %></p>
 <p><strong>Created at:</strong><%= question.createdAt %></p>
 
+<%# Delete %>
 <form action="/questions/<%= question.id %>" method="post">
   <input type="hidden" name="_method" value="delete">
   <input type="submit" name="" value="Delete">
 </form>
+
+<%# EDIT LINK%>
+<a href="/questions/<%= question.id %>/edit">Edit</a>
 
 <h2>Answers</h2>
 <form action="/questions/<%= question.id %>/answers" method="post">

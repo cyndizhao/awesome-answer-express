@@ -24,6 +24,7 @@ router.get('/new', function(req, res){
   const question = Question.build();
   res.render('questions/new', {question: question});
 })
+//Question#create
 router.post('/', function(req, res){
   // .body is a property of the request object that
   // contains all form data as a JavaScript object
@@ -47,13 +48,43 @@ router.delete("/:id", function(req, res){
   .then(function(){res.redirect('/questions')});
 })
 
+//Question#edit URL: /questions/:id/edit VERB: GET
+router.get('/:id/edit', function(req, res){
+  const id = req.params.id;
+  Question.findById(id).then(function(question){
+    res.render('questions/edit', {question: question});
+  })
+  // .catch(function(err){
+  //   next(err);
+  // })
+})
+
+// Questions#update URL: /questions/:id VERB: PATCH
+router.patch('/:id', function (req, res, next) {
+  const id = req.params.id;
+
+  Question
+    .findById(id)
+    .then(function (question) {
+      question.update(
+        {title: req.body.title, description: req.body.description}
+      );
+    })
+    .then(function (question) {
+      res.redirect(`/questions/${id}`)
+    })
+    .catch(function (err) { next(err) })
+})
+
+
 // Questions#show URL: /questions/:id VERB: GET
 // For a url `/questions/99`, the req.params object will be equal to {id: '99'}
 router.get('/:id', function(req, res){
   const id = req.params.id;
   Question.findById(id).then(function(question){
-    return Promise.all([question, question.getAnswers({order: [['createdAt', 'DESC']]})]);
-    //????????????????????????????????????????????????????????????????????????????
+    return Promise.all([question, question.getAnswers({ order: [['createdAt', 'DESC']] })]);
+    // return Promise.all([question, question.getAnswers({ order: '"createdAt" DESC' })]);
+
   }).then(function([question, answers]){
     //New! Array Destructuring
     //const [first, second, ...rest] = [1, 2, 3, 4]
